@@ -4,9 +4,8 @@ from typing import Annotated
 from fastapi import Depends
 from fastapi.security import HTTPBearer, OAuth2PasswordBearer
 from datetime import datetime, timedelta, timezone
-
 from app.src.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from app.src.domain.auth.schemas import Token, TokenData
+from app.src.auth.schemas import Token, TokenData
 
 http_bearer = HTTPBearer()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
