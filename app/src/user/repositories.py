@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
-
 from app.src.dependencies import get_password_hash
-from app.src.domain.user.schemas import User, UserCreate, UserList
-from app.src.domain.user.models import User as user_model
+from app.src.user.schemas import User, UserCreate, UserList
+from app.src.user.models import User as user_model
 
 class UserRepository:
   def __init__(self, db: Session):

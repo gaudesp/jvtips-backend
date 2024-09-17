@@ -1,5 +1,8 @@
 from app.src.database import SessionLocal
 from passlib.context import CryptContext
+from fastapi import HTTPException
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -15,3 +18,6 @@ def get_db():
     yield db
   finally:
     db.close()
+
+async def http_error_handler(_: Request, exc: HTTPException) -> JSONResponse:
+  return JSONResponse({"errors": [exc.detail]}, status_code=exc.status_code)

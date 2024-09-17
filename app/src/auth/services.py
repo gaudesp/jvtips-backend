@@ -1,12 +1,11 @@
 from typing import Annotated
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-
 from app.src.dependencies import verify_password
-from app.src.domain.user.repositories import UserRepository
-from app.src.domain.user.schemas import User
-from app.src.domain.auth.schemas import Token
-from app.src.domain.auth.dependencies import oauth2_scheme, decode_access_token, encode_access_token
+from app.src.user.repositories import UserRepository
+from app.src.user.schemas import User
+from app.src.auth.schemas import Token
+from app.src.auth.dependencies import oauth2_scheme, decode_access_token, encode_access_token
 
 class AuthService:
   def __init__(self, db: Session):

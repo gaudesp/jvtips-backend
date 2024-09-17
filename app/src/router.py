@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-
-from . import health, auth, users
+from app.src.health import router as health
+from app.src.auth import router as auth
+from app.src.user import router as user
 from app.src.config import ROUTE_PREFIX
 
 router = APIRouter()
@@ -8,6 +9,6 @@ router = APIRouter()
 def include_api_routes():
   router.include_router(health.router, prefix=ROUTE_PREFIX)
   router.include_router(auth.router, prefix=ROUTE_PREFIX)
-  router.include_router(users.router, prefix=ROUTE_PREFIX)
+  router.include_router(user.router, prefix=ROUTE_PREFIX)
 
 include_api_routes()
