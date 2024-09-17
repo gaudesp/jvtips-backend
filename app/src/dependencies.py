@@ -1,9 +1,19 @@
-import bcrypt
 from .database import SessionLocal
+from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
 
 ###
 # Dependencies configurations
 ###
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+def verify_password(plain_password, hashed_password):
+  return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+  return pwd_context.hash(password)
 
 def get_db():
   db = SessionLocal()
@@ -11,8 +21,3 @@ def get_db():
     yield db
   finally:
     db.close()
-
-def hash_password(password):
-  password_bytes = password.encode('utf-8')
-  hashed_bytes = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
-  return hashed_bytes.decode('utf-8')
