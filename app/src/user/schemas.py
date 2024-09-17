@@ -1,8 +1,8 @@
 from typing import List
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, RootModel, EmailStr
 
 class UserBase(BaseModel):
-  email: str
+  email: EmailStr
 
 class UserCreate(UserBase):
   password: str

@@ -1,4 +1,3 @@
-from typing import List
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from app.src.dependencies import get_db
