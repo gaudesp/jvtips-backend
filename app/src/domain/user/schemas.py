@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from typing import List
+from pydantic import BaseModel, RootModel
 
 class UserBase(BaseModel):
   email: str
@@ -8,4 +9,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
   id: int
-  is_active: bool
+  disabled: bool
+
+class UserList(RootModel):
+  root: List[User]

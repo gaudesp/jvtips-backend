@@ -1,27 +1,25 @@
 from typing import List
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 
-from ..dependencies import get_db
-from ..domain.user import services as user_services, schemas as user_schemas
+from app.src.dependencies import get_db
+from app.src.domain.user.schemas import User, UserCreate, UserList
+from app.src.domain.user.services import UserService
 
 router = APIRouter(tags=["users"])
 
-@router.post("/users", response_model=user_schemas.User)
-def create_user(user: user_schemas.UserCreate, db: Session = Depends(get_db)):
-  db_user = user_services.get_user_by_email(db, email=user.email)
-  if db_user:
-    raise HTTPException(status_code=400, detail="Email already registered")
-  return user_services.create_user(db=db, user=user)
+@router.post("/users", response_model=User)
+def create_user(data: UserCreate, db: Session = Depends(get_db)):
+  user_service = UserService(db)
+  return user_service.create(data)
 
-@router.get("/users", response_model=List[user_schemas.User])
+@router.get("/users", response_model=UserList)
 def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-  users = user_services.get_users(db, skip=skip, limit=limit)
-  return users
+  user_service = UserService(db)
+  return user_service.get_all(skip, limit)
 
-@router.get("/users/{user_id}", response_model=user_schemas.User)
+@router.get("/users/{user_id}", response_model=User)
 def get_user(user_id: int, db: Session = Depends(get_db)):
-  db_user = user_services.get_user(db, user_id=user_id)
-  if db_user is None:
-    raise HTTPException(status_code=404, detail="User not found")
-  return db_user
+  user_service = UserService(db)
+  user = user_service.get_by_id(user_id)
+  return user
