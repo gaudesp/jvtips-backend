@@ -1,20 +1,29 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from . import models, schemas
-from ...dependencies import get_password_hash
+from app.src.domain.user.repositories import UserRepository
+from app.src.domain.user.schemas import User, UserCreate, UserList
 
-def get_user(db: Session, user_id: int):
-  return db.query(models.User).filter(models.User.id == user_id).first()
+class UserService:
+  def __init__(self, db: Session):
+    self.user_repository = UserRepository(db)
 
-def get_user_by_email(db: Session, email: str):
-  return db.query(models.User).filter(models.User.email == email).first()
-
-def get_users(db: Session, skip: int = 0, limit: int = 100):
-  return db.query(models.User).offset(skip).limit(limit).all()
-
-def create_user(db: Session, user: schemas.UserCreate):
-  db_user = models.User(email=user.email, hashed_password=get_password_hash(user.password))
-  db.add(db_user)
-  db.commit()
-  db.refresh(db_user)
-  return db_user
+  def create(self, user: UserCreate) -> UserCreate:
+    if self.user_repository.find_one_by_email(user.email):
+      raise HTTPException(status_code=400, detail="Email already exists")
+    return self.user_repository.create(user)
+  
+  def get_all(self, skip: int = 0, limit: int = 100) -> UserList:
+    return self.user_repository.find_all(skip, limit)
+  
+  def get_by_id(self, user_id) -> User:
+    user = self.user_repository.find_one_by_id(user_id)
+    if user is None:
+      raise HTTPException(status_code=400, detail="User not found")
+    return user
+  
+  def get_by_email(self, user_id) -> User:
+    user = self.user_repository.find_one_by_email(user_id)
+    if user is None:
+      raise HTTPException(status_code=400, detail="User not found")
+    return user

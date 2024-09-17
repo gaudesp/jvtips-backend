@@ -1,13 +1,9 @@
 from fastapi import APIRouter
 
-from ..domain.health import schemas
-
-###
-# Health Router configurations
-###
+from app.src.domain.health.schemas import HealthCheck
 
 router = APIRouter(tags=["health"])
 
-@router.get("/health/check", response_model=schemas.HealthCheck)
+@router.get("/health/check", response_model=HealthCheck)
 def health_check():
-  return schemas.HealthCheck(status="OK")
+  return HealthCheck()

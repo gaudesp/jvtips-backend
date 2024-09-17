@@ -1,11 +1,7 @@
 from fastapi import APIRouter
 
 from . import health, auth, users
-from ..config import ROUTE_PREFIX
-
-###
-# API Router configurations
-###
+from app.src.config import ROUTE_PREFIX
 
 router = APIRouter()
 
