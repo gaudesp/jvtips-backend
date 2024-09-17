@@ -1,4 +1,4 @@
-from app.src.database import SessionLocal
+from src.database import SessionLocal
 from passlib.context import CryptContext
 from fastapi import HTTPException
 from starlette.requests import Request

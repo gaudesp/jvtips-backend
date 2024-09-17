@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException
-from app.src.config import API_PREFIX, ALLOWED_HOSTS
-from app.src.database import engine, SessionLocal, Base
-from app.src.router import router as router_api
-from app.src.dependencies import http_error_handler
+from src.config import API_PREFIX, ALLOWED_HOSTS
+from src.database import engine, SessionLocal, Base
+from src.router import router as router_api
+from src.dependencies import http_error_handler
 
 def get_application() -> FastAPI:
   application = FastAPI()

@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from app.src.health import router as health
-from app.src.auth import router as auth
-from app.src.user import router as user
-from app.src.config import ROUTE_PREFIX
+from src.health import router as health
+from src.auth import router as auth
+from src.user import router as user
+from src.config import ROUTE_PREFIX
 
 router = APIRouter()
 

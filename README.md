@@ -24,3 +24,26 @@ sudo bash run.sh
 ```bash
 DATABASE_URL=postgresql://user:password@db:5432/database
 ```
+
+## Project Structure
+
+This structure is inspired by [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-best-practices)
+
+```ruby
+jvtips-backend
+├── src
+│   ├── module
+│   │   ├── config.py  # local configs
+│   │   ├── dependencies.py # module dependencies
+│   │   ├── models.py  # db models
+│   │   ├── router.py  # module endpoints
+│   │   ├── schemas.py  # pydantic models
+│   │   ├── services.py # service layer for business logic
+│   │   └── repositories.py # repository pattern for db transaction
+│   ├── config.py  # global configs
+│   ├── database.py  # db connection related stuff
+│   ├── dependencies.py  # global dependencies
+│   ├── main.py  # main app
+│   └── router.py #  global router
+└── .env # env variables
+```
