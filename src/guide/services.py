@@ -15,8 +15,7 @@ class GuideService:
   def create(self, guide: GuideCreate) -> Guide:
     user = self.auth_service.get_current_user(self.user_token)
     game = self.game_service.get_by_id(guide.game_id)
-    if game and user:
-      return self.guide_repository.create(guide, user_id=user.id)
+    return self.guide_repository.create(guide, user_id=user.id)
   
   def get_all(self, skip: int = 0, limit: int = 100) -> Guides:
     return self.guide_repository.find_all(skip, limit)

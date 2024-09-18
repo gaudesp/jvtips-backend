@@ -19,11 +19,9 @@ def get_games(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 @router.get("/games/{game_id}", response_model=Game)
 def get_game(game_id: int, db: Session = Depends(get_db)):
   game_service = GameService(db)
-  game = game_service.get_by_id(game_id)
-  return game
+  return game_service.get_by_id(game_id)
 
 @router.get("/games/{game_id}/guides", response_model=GameGuides)
 def get_game_guides(game_id: int, db: Session = Depends(get_db)):
   game_service = GameService(db)
-  game_guides = game_service.get_guides(game_id)
-  return game_guides
+  return game_service.get_guides(game_id)
