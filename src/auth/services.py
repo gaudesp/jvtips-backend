@@ -20,7 +20,7 @@ class AuthService:
     access_token = encode_access_token(data={"sub": user.email})
     return access_token
   
-  def get_current_user_by_token(self, token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+  def get_current_user(self, token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     token_data = decode_access_token(token)
     if token_data is None:
       raise HTTPException(status_code=401, detail="Could not validate credentials")

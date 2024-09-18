@@ -1,18 +1,18 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from src.user.repositories import UserRepository
-from src.user.schemas import User, UserCreate, UserList
+from src.user.schemas import User, UserCreate, Users, UserGuides
 
 class UserService:
   def __init__(self, db: Session):
     self.user_repository = UserRepository(db)
 
-  def create(self, user: UserCreate) -> UserCreate:
+  def create(self, user: UserCreate) -> User:
     if self.user_repository.find_one_by_email(user.email):
       raise HTTPException(status_code=400, detail="Email already exists")
     return self.user_repository.create(user)
   
-  def get_all(self, skip: int = 0, limit: int = 100) -> UserList:
+  def get_all(self, skip: int = 0, limit: int = 100) -> Users:
     return self.user_repository.find_all(skip, limit)
   
   def get_by_id(self, user_id) -> User:
@@ -26,3 +26,8 @@ class UserService:
     if user is None:
       raise HTTPException(status_code=400, detail="User not found")
     return user
+
+  def get_guides(self, user_id) -> UserGuides:
+    user = self.get_by_id(user_id)
+    user_guides = self.user_repository.find_guides(user.id)
+    return user_guides
