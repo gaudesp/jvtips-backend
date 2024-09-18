@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from src.guide.schemas import Guide, GuideCreate, GuideList
+from src.guide.schemas import Guide, GuideCreate, Guides
 from src.guide.models import Guide as GuideModel
 
 class GuideRepository:
@@ -13,7 +13,7 @@ class GuideRepository:
     self.db.refresh(guide)
     return guide
   
-  def find_all(self, skip: int = 0, limit: int = 100) -> GuideList:
+  def find_all(self, skip: int = 0, limit: int = 100) -> Guides:
     guides = self.db.query(GuideModel).offset(skip).limit(limit).all()
     return guides
   

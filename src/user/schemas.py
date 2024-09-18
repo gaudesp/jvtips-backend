@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import BaseModel, RootModel, EmailStr
 from src.guide.schemas import Guide
 
@@ -11,10 +10,12 @@ class UserCreate(UserBase):
 class User(UserBase):
   id: int
   disabled: bool
-  guides: List[Guide]
 
   class Config:
     from_attributes = True
 
-class UserList(RootModel):
-  root: List[User]
+class Users(RootModel):
+  root: list[User] = []
+
+class UserGuides(User):
+  guides: list[Guide] = []

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.dependencies import get_password_hash
-from src.user.schemas import User, UserCreate, UserList
+from src.user.schemas import User, UserCreate, Users, UserGuides
 from src.user.models import User as UserModel
 
 class UserRepository:
@@ -14,7 +14,7 @@ class UserRepository:
     self.db.refresh(user)
     return user
   
-  def find_all(self, skip: int = 0, limit: int = 100) -> UserList:
+  def find_all(self, skip: int = 0, limit: int = 100) -> Users:
     users = self.db.query(UserModel).offset(skip).limit(limit).all()
     return users
   
@@ -25,3 +25,7 @@ class UserRepository:
   def find_one_by_email(self, email: str) -> User:
     user = self.db.query(UserModel).filter(UserModel.email == email).first()
     return user
+
+  def find_guides(self, user_id: int) -> UserGuides:
+    user_guides = self.find_one_by_id(user_id)
+    return user_guides

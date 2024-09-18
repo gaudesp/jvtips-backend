@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import BaseModel, RootModel
 
 class GuideBase(BaseModel):
@@ -17,5 +16,5 @@ class Guide(GuideBase):
   class Config:
     from_attributes = True
 
-class GuideList(RootModel):
-  root: List[Guide]
+class Guides(RootModel):
+  root: list[Guide] = []

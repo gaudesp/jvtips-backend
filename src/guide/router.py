@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from src.dependencies import get_db, http_bearer
-from src.guide.schemas import Guide, GuideCreate, GuideList
+from src.guide.schemas import Guide, GuideCreate, Guides
 from src.guide.services import GuideService
 
 router = APIRouter(tags=["guides"])
@@ -11,7 +11,7 @@ def create_guide(data: GuideCreate, token: str = Depends(http_bearer), db: Sessi
   guide_service = GuideService(db, token)
   return guide_service.create(data)
 
-@router.get("/guides", response_model=GuideList)
+@router.get("/guides", response_model=Guides)
 def get_guides(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
   guide_service = GuideService(db)
   return guide_service.get_all(skip, limit)

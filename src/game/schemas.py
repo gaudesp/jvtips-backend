@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import BaseModel, RootModel
 from src.guide.schemas import Guide
 
@@ -10,10 +9,12 @@ class GameCreate(GameBase):
 
 class Game(GameBase):
   id: int
-  guides: List[Guide]
 
   class Config:
     from_attributes = True
 
-class GameList(RootModel):
-  root: List[Game]
+class GameGuides(Game):
+  guides: list[Guide] = []
+
+class Games(RootModel):
+  root: list[Game] = []
