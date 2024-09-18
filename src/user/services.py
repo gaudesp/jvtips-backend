@@ -7,7 +7,7 @@ class UserService:
   def __init__(self, db: Session):
     self.user_repository = UserRepository(db)
 
-  def create(self, user: UserCreate) -> UserCreate:
+  def create(self, user: UserCreate) -> User:
     if self.user_repository.find_one_by_email(user.email):
       raise HTTPException(status_code=400, detail="Email already exists")
     return self.user_repository.create(user)

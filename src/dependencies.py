@@ -1,9 +1,11 @@
 from src.database import SessionLocal
 from passlib.context import CryptContext
 from fastapi import HTTPException
+from fastapi.security import HTTPBearer
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
+http_bearer = HTTPBearer()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password, hashed_password):
