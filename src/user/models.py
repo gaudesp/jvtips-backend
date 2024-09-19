@@ -10,4 +10,4 @@ class User(Base):
   hashed_password = Column(String)
   disabled = Column(Boolean, default=False)
 
-  guides = relationship("Guide", backref="user")
+  guides = relationship("Guide", backref="user", lazy='dynamic')

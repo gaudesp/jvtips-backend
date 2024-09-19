@@ -12,7 +12,7 @@ class UserService:
       raise HTTPException(status_code=400, detail="Email already exists")
     return self.user_repository.create(user)
   
-  def get_all(self, skip: int = 0, limit: int = 100) -> Users:
+  def get_all(self, skip: int, limit: int) -> Users:
     return self.user_repository.find_all(skip, limit)
   
   def get_by_id(self, user_id) -> User:
@@ -27,7 +27,7 @@ class UserService:
       raise HTTPException(status_code=400, detail="User not found")
     return user
 
-  def get_guides(self, user_id) -> UserGuides:
+  def get_guides(self, user_id, skip, limit) -> UserGuides:
     user = self.get_by_id(user_id)
-    user_guides = self.user_repository.find_guides(user.id)
+    user_guides = self.user_repository.find_guides(user.id, skip, limit)
     return user_guides
