@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from src.dependencies import get_password_hash
+from src.guide.schemas import GuidesPaginated
+from src.pagination import paginate
 from src.user.schemas import User, UserCreate, Users, UserGuides
 from src.user.models import User as UserModel
 from src.guide.models import Guide as GuideModel
@@ -26,8 +28,8 @@ class UserRepository:
   def find_one_by_email(self, email: str) -> User:
     user = self.db.query(UserModel).filter(UserModel.email == email).first()
     return user
-
-  def find_guides(self, user: User, skip: int, limit: int) -> UserGuides:
-    user_guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id).offset(skip).limit(limit).all()
-    return UserGuides(id=user.id, email=user.email, disabled=user.disabled, guides=user_guides)
   
+  def find_guides(self, user: User, params) -> UserGuides:
+    guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id)
+
+    return UserGuides(**user.__dict__, guides=paginate(guides, params, GuidesPaginated))

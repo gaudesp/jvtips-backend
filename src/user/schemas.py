@@ -1,5 +1,5 @@
 from pydantic import BaseModel, RootModel, EmailStr
-from src.guide.schemas import Guide
+from src.guide.schemas import GuidesPaginated
 
 class UserBase(BaseModel):
   email: EmailStr
@@ -11,11 +11,9 @@ class User(UserBase):
   id: int
   disabled: bool
 
-  class Config:
-    from_attributes = True
-
 class Users(RootModel):
   root: list[User] = []
 
 class UserGuides(User):
-  guides: list[Guide] = []
+  guides: GuidesPaginated
+  
