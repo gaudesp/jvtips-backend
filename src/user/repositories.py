@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.dependencies import get_password_hash
-from src.guide.schemas import GuidesPaginated
-from src.pagination import paginate
+from src.guide.schemas import GuidesPaginated, Guide
+from src.pagination import paginate, Params
 from src.user.schemas import User, UserCreate, Users, UserGuides
 from src.user.models import User as UserModel
 from src.guide.models import Guide as GuideModel
@@ -15,21 +15,21 @@ class UserRepository:
     self.db.add(user)
     self.db.commit()
     self.db.refresh(user)
-    return user
+    return User.from_orm(user)
   
   def find_all(self, skip: int = 0, limit: int = 100) -> Users:
     users = self.db.query(UserModel).offset(skip).limit(limit).all()
-    return users
+    return Users(root=[User.from_orm(user) for user in users])
   
   def find_one_by_id(self, user_id: int) -> User:
     user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
-    return user
+    return User.from_orm(user)
   
   def find_one_by_email(self, email: str) -> User:
     user = self.db.query(UserModel).filter(UserModel.email == email).first()
-    return user
+    return User.from_orm(user)
   
-  def find_guides(self, user: User, params) -> UserGuides:
+  def find_guides(self, user: User, params: Params) -> UserGuides:
     guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id)
-
-    return UserGuides(**user.__dict__, guides=paginate(guides, params, GuidesPaginated))
+    paginated_guides = paginate(guides, params, GuidesPaginated)
+    return UserGuides.from_orm_paginated(user, paginated_guides)
