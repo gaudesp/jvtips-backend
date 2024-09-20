@@ -29,5 +29,5 @@ class UserService:
 
   def get_guides(self, user_id, skip, limit) -> UserGuides:
     user = self.get_by_id(user_id)
-    user_guides = self.user_repository.find_guides(user.id, skip, limit)
+    user_guides = self.user_repository.find_guides(user, skip, limit)
     return user_guides

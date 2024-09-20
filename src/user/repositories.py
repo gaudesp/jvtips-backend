@@ -1,6 +1,4 @@
-from fastapi import logger
-from sqlalchemy import select
-from sqlalchemy.orm import Session, aliased, contains_eager
+from sqlalchemy.orm import Session
 from src.dependencies import get_password_hash
 from src.user.schemas import User, UserCreate, Users, UserGuides
 from src.user.models import User as UserModel
@@ -29,11 +27,7 @@ class UserRepository:
     user = self.db.query(UserModel).filter(UserModel.email == email).first()
     return user
 
-  def find_guides(self, user_id: int, skip: int, limit: int) -> UserGuides:
-    # wip
-    subq = self.db.query(GuideModel).filter(GuideModel.user_id == UserModel.id).offset(skip).limit(limit).subquery().lateral()
-    q = self.db.query(UserModel).outerjoin(subq).options(contains_eager(UserModel.guides, alias=subq))
-    return
-
-    user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
-    return UserGuides(email=query.email, id=query.id, disabled=query.disabled, guides=query.guides.offset(skip).limit(limit))
+  def find_guides(self, user: User, skip: int, limit: int) -> UserGuides:
+    user_guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id).offset(skip).limit(limit).all()
+    return UserGuides(id=user.id, email=user.email, disabled=user.disabled, guides=user_guides)
+  

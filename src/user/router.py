@@ -23,7 +23,7 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
   return user
 
 @router.get("/users/{user_id}/guides", response_model=UserGuides)
-def get_game_guides(user_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def get_user_guides(user_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
   user_service = UserService(db)
   user_guides = user_service.get_guides(user_id, skip, limit)
   return user_guides
