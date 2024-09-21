@@ -1,5 +1,8 @@
 from pydantic import BaseModel, RootModel
-from src.guide.schemas import Guide
+from src.guide.schemas import Guide, GuidesPaginated
+from src.game.models import Game as GameModel
+from src.pagination import Paginated, ORMNestedMixin
+from typing import ClassVar
 
 class GameBase(BaseModel):
   name: str
@@ -13,8 +16,14 @@ class Game(GameBase):
   class Config:
     from_attributes = True
 
-class GameGuides(Game):
-  guides: list[Guide] = []
+class GamesPaginated(Paginated):
+  items_model: ClassVar = Game
 
 class Games(RootModel):
-  root: list[Game] = []
+  root: GamesPaginated
+
+  class Config:
+    from_attributes = True
+
+class GameGuides(Game, ORMNestedMixin):
+  guides: GuidesPaginated

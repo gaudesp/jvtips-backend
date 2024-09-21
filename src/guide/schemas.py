@@ -18,11 +18,11 @@ class Guide(GuideBase):
   class Config:
     from_attributes = True
 
-class Guides(RootModel):
-  root: list[Guide] = []
-
 class GuidesPaginated(Paginated):
   items_model: ClassVar = Guide
+
+class Guides(RootModel):
+  root: GuidesPaginated
 
   class Config:
     from_attributes = True

@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from src.guide.schemas import Guide, GuideCreate, Guides
+from src.pagination import paginate, Params
+from src.guide.schemas import Guide, GuideCreate, Guides, GuidesPaginated
 from src.guide.models import Guide as GuideModel
 
 class GuideRepository:
@@ -13,9 +14,10 @@ class GuideRepository:
     self.db.refresh(guide)
     return guide
   
-  def find_all(self, skip: int = 0, limit: int = 100) -> Guides:
-    guides = self.db.query(GuideModel).offset(skip).limit(limit).all()
-    return guides
+  def find_all(self, params: Params) -> Guides:
+    guides = self.db.query(GuideModel)
+    paginated_guides = paginate(guides, params, GuidesPaginated)
+    return Guides.from_orm(paginated_guides)
   
   def find_one_by_id(self, guide_id: int) -> Guide:
     guide = self.db.query(GuideModel).filter(GuideModel.id == guide_id).first()
