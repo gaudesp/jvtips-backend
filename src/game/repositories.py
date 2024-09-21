@@ -19,7 +19,7 @@ class GameRepository:
   def find_all(self, params: Params) -> Games:
     games = self.db.query(GameModel)
     paginated_games = paginate(games, params, GamesPaginated)
-    return Games.from_orm(paginated_games)
+    return Games.model_validate(paginated_games)
   
   def find_one_by_id(self, game_id: int) -> Game:
     game = self.db.query(GameModel).filter(GameModel.id == game_id).first()
@@ -32,4 +32,4 @@ class GameRepository:
   def find_guides(self, game: Game, params: Params) -> GameGuides:
     guides = self.db.query(GuideModel).filter(GuideModel.game_id == game.id)
     paginated_guides = paginate(guides, params, GuidesPaginated)
-    return GameGuides.from_orm_nested(game, guides=paginated_guides)
+    return GameGuides.model_validate_nested(game, guides=paginated_guides)

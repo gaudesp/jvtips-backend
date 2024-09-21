@@ -17,7 +17,7 @@ class GuideRepository:
   def find_all(self, params: Params) -> Guides:
     guides = self.db.query(GuideModel)
     paginated_guides = paginate(guides, params, GuidesPaginated)
-    return Guides.from_orm(paginated_guides)
+    return Guides.model_validate(paginated_guides)
   
   def find_one_by_id(self, guide_id: int) -> Guide:
     guide = self.db.query(GuideModel).filter(GuideModel.id == guide_id).first()

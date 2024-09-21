@@ -20,14 +20,14 @@ class ORMNestedMixin(BaseModel):
   @classmethod
   def from_orm_nested(cls, parent_data, **nested_data: Paginated):
     parent_model = next(base for base in cls.__bases__ if issubclass(base, BaseModel))
-    model_data = parent_model.from_orm(parent_data)
-    return cls(**model_data.dict(), **nested_data)
+    model_data = parent_model.model_validate(parent_data)
+    return cls(**model_data.model_dump(), **nested_data)
 
 def paginate(query, params: Params, schema: Type[Paginated[T]]) -> Paginated[T]:
   total_items = query.order_by(None).count()
   items = query.offset((params.page - 1) * params.size).limit(params.size).all()
   total_pages = (total_items + params.size - 1) // params.size
-  items = [schema.items_model.from_orm(item) for item in items]
+  items = [schema.items_model.model_validate(item) for item in items]
 
   return schema(
     total_items=total_items,

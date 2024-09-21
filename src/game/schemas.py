@@ -1,6 +1,5 @@
 from pydantic import BaseModel, RootModel
-from src.guide.schemas import Guide, GuidesPaginated
-from src.game.models import Game as GameModel
+from src.guide.schemas import GuidesPaginated
 from src.pagination import Paginated, ORMNestedMixin
 from typing import ClassVar
 

@@ -20,7 +20,7 @@ class UserRepository:
   def find_all(self, params: Params) -> Users:
     users = self.db.query(UserModel)
     paginated_users = paginate(users, params, UsersPaginated)
-    return Users.from_orm(paginated_users)
+    return Users.model_validate(paginated_users)
   
   def find_one_by_id(self, user_id: int) -> User:
     user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
@@ -33,4 +33,4 @@ class UserRepository:
   def find_guides(self, user: User, params: Params) -> UserGuides:
     guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id)
     paginated_guides = paginate(guides, params, GuidesPaginated)
-    return UserGuides.from_orm_nested(user, guides=paginated_guides)
+    return UserGuides.model_validate_nested(user, guides=paginated_guides)

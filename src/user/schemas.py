@@ -1,6 +1,5 @@
 from pydantic import BaseModel, RootModel, EmailStr
 from src.guide.schemas import GuidesPaginated
-from src.user.models import User as UserModel
 from src.pagination import Paginated, ORMNestedMixin
 from typing import ClassVar
 
