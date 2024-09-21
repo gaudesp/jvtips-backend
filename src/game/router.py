@@ -22,7 +22,7 @@ def get_game(game_id: int, db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_by_id(game_id)
 
-@router.get("/game/{game_id}/guides", response_model=GameGuides)
+@router.get("/games/{game_id}/guides", response_model=GameGuides)
 def get_game_guides(game_id: int, params: Params = Depends(), db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_guides(game_id, params)
