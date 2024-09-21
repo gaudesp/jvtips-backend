@@ -1,4 +1,6 @@
 from pydantic import BaseModel, RootModel
+from src.pagination import Paginated
+from typing import ClassVar
 
 class GuideBase(BaseModel):
   title: str
@@ -16,5 +18,11 @@ class Guide(GuideBase):
   class Config:
     from_attributes = True
 
+class GuidesPaginated(Paginated):
+  items_model: ClassVar = Guide
+
 class Guides(RootModel):
-  root: list[Guide] = []
+  root: GuidesPaginated
+
+  class Config:
+    from_attributes = True

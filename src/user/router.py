@@ -1,6 +1,7 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from src.dependencies import get_db
+from src.pagination import Params
 from src.user.schemas import User, UserCreate, Users, UserGuides
 from src.user.services import UserService
 
@@ -12,18 +13,16 @@ def create_user(data: UserCreate, db: Session = Depends(get_db)):
   return user_service.create(data)
 
 @router.get("/users", response_model=Users)
-def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def get_users(params: Params = Depends(), db: Session = Depends(get_db)):
   user_service = UserService(db)
-  return user_service.get_all(skip, limit)
+  return user_service.get_all(params)
 
 @router.get("/users/{user_id}", response_model=User)
 def get_user(user_id: int, db: Session = Depends(get_db)):
   user_service = UserService(db)
-  user = user_service.get_by_id(user_id)
-  return user
+  return user_service.get_by_id(user_id)
 
 @router.get("/users/{user_id}/guides", response_model=UserGuides)
-def get_game_guides(user_id: int, db: Session = Depends(get_db)):
+def get_user_guides(user_id: int, params: Params = Depends(), db: Session = Depends(get_db)):
   user_service = UserService(db)
-  user_guides = user_service.get_guides(user_id)
-  return user_guides
+  return user_service.get_guides(user_id, params)

@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from src.pagination import Params
 from src.auth.services import AuthService
 from src.guide.repositories import GuideRepository
 from src.game.services import GameService
@@ -17,8 +18,8 @@ class GuideService:
     game = self.game_service.get_by_id(guide.game_id)
     return self.guide_repository.create(guide, user_id=user.id)
   
-  def get_all(self, skip: int = 0, limit: int = 100) -> Guides:
-    return self.guide_repository.find_all(skip, limit)
+  def get_all(self, params: Params) -> Guides:
+    return self.guide_repository.find_all(params)
   
   def get_by_id(self, guide_id) -> Guide:
     guide = self.guide_repository.find_one_by_id(guide_id)

@@ -17,8 +17,7 @@ class AuthService:
       raise HTTPException(status_code=401, detail="User not found")
     if not verify_password(password, user.hashed_password):
       raise HTTPException(status_code=401, detail="Incorrect email or password")
-    access_token = encode_access_token(data={"sub": user.email})
-    return access_token
+    return encode_access_token(data={"sub": user.email})
   
   def get_current_user(self, token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     token_data = decode_access_token(token)

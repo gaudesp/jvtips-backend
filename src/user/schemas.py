@@ -1,5 +1,7 @@
 from pydantic import BaseModel, RootModel, EmailStr
-from src.guide.schemas import Guide
+from src.guide.schemas import GuidesPaginated
+from src.pagination import Paginated, ORMNestedMixin
+from typing import ClassVar
 
 class UserBase(BaseModel):
   email: EmailStr
@@ -14,8 +16,14 @@ class User(UserBase):
   class Config:
     from_attributes = True
 
-class Users(RootModel):
-  root: list[User] = []
+class UsersPaginated(Paginated):
+  items_model: ClassVar = User
 
-class UserGuides(User):
-  guides: list[Guide] = []
+class Users(RootModel):
+  root: UsersPaginated
+
+  class Config:
+    from_attributes = True
+
+class UserGuides(User, ORMNestedMixin):
+  guides: GuidesPaginated
