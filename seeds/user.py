@@ -6,7 +6,8 @@ def seed_users(db, model, count):
   for i in range(1, count+1):
     user = model(
       email=f"user_{i}@example.com",
-      hashed_password=get_password_hash('password'))
+      hashed_password=get_password_hash('password')
+    )
     db.add(user)
     print_model_details(user)
   db.commit()
