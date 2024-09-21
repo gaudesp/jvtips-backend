@@ -10,6 +10,17 @@ services:
       - db
     env_file: .env
 
+  seeds:
+    build: .
+    command: >
+      sh -c 'if [ "${SEEDS}" = "true" ]; then python seeds/main.py; fi'
+    volumes:
+      - .:/seeds
+    depends_on:
+      - db
+    env_file: .env
+    restart: "no"
+
   db:
     image: postgres:alpine3.14
     expose:

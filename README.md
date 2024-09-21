@@ -3,13 +3,19 @@
 REST API project using fastApi.
 
 ## Requirements
-
 - [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Running the Application
 
+Default running :
 ```bash
-sudo bash run.sh
+docker compose up --build
+```
+
+Running with seeds :
+```bash
+SEEDS=true docker compose up --build
 ```
 
 ## Accessing the Application Locally
@@ -22,7 +28,7 @@ sudo bash run.sh
 ## Environment variables
 
 ```bash
-DATABASE_URL=postgresql://user:password@db:5432/database
+DATABASE_URL=postgresql://user:password@host:5432/database
 ```
 
 ## Project Structure
