@@ -6,10 +6,8 @@ def reset_database():
   Base.metadata.create_all(bind=engine)
   print("Database reset complete!\n")
 
-def print_model_details(model_instance, exclude=[]):
+def print_model_details(model_instance):
   attributes = vars(model_instance)
-  for attr in exclude:
-    attributes.pop(attr, None)
   attributes.pop('_sa_instance_state', None)
   attribute_str = ', '.join([f"{key}='{value}'" for key, value in attributes.items()])
   print(f"- Create <{model_instance.__class__.__name__} {attribute_str}>")
