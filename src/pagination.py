@@ -1,6 +1,6 @@
 from fastapi import Query
 from pydantic import BaseModel
-from typing import Type, TypeVar, Generic, List, Dict, Any
+from typing import Type, TypeVar, Generic, List
 from pydantic import BaseModel
 
 T = TypeVar("T", bound=BaseModel)
