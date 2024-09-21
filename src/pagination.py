@@ -18,7 +18,7 @@ class Paginated(BaseModel, Generic[T]):
 
 class ORMNestedMixin(BaseModel):
   @classmethod
-  def from_orm_nested(cls, parent_data, **nested_data: Paginated):
+  def model_validate_nested(cls, parent_data, **nested_data: Paginated):
     parent_model = next(base for base in cls.__bases__ if issubclass(base, BaseModel))
     model_data = parent_model.model_validate(parent_data)
     return cls(**model_data.model_dump(), **nested_data)
