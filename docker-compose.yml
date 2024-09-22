@@ -1,29 +1,7 @@
 services:
-  api:
-    build: .
-    command: uvicorn src.main:app --host 0.0.0.0 --port 3000
-    volumes:
-      - .:/src
-    ports:
-      - 3000:3000
-    depends_on:
-      - db
-      - seeds
-    env_file: .env
-
-  seeds:
-    build: .
-    command: >
-      sh -c 'if [ "${SEEDS}" = "true" ]; then python seeds/main.py; fi'
-    volumes:
-      - .:/seeds
-    depends_on:
-      - db
-    env_file: .env
-    restart: "no"
-
   db:
     image: postgres:alpine3.14
+    env_file: .env
     expose:
       - 5432
 
@@ -31,3 +9,26 @@ services:
     image: adminer
     ports:
       - 9000:8080
+
+  seeds:
+    build: .
+    command: >
+      sh -c '/jvtips-backend/wait-for-it.sh db:5432 -- [ "${SEEDS}" = "true" ] && python seeds/main.py'
+    volumes:
+      - .:/seeds
+    depends_on:
+      - db
+    env_file: .env
+    restart: "no"
+
+  api:
+    build: .
+    command: >
+      sh -c '/jvtips-backend/wait-for-it.sh db:5432 -- uvicorn src.main:app --host 0.0.0.0 --port 3000'
+    volumes:
+      - .:/src
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    env_file: .env
