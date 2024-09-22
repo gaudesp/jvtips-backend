@@ -20,15 +20,19 @@ SEEDS=true docker compose up --build
 
 ## Accessing the Application Locally
 
-- The application will be available at: [http://localhost:3000](http://127.0.0.1:3000)
-- Swagger Documentation: [http://localhost:3000/docs](http://127.0.0.1:3000/docs)
-- Redoc Documentation: [http://localhost:3000/redoc](http://127.0.0.1:3000/redoc)
-- Database Adminer: [http://localhost:9000](http://127.0.0.1:9000)
+- The application will be available at: [http://localhost:3000](http://localhost:3000)
+- Swagger Documentation: [http://localhost:3000/docs](http://localhost:3000/docs)
+- Redoc Documentation: [http://localhost:3000/redoc](http://localhost:3000/redoc)
+- Database Adminer: [http://localhost:9000](http://localhost:9000)
 
 ## Environment variables
 
-```bash
-DATABASE_URL=postgresql://user:password@host:5432/database
+```python
+POSTGRES_USER=user # postgresql user name
+POSTGRES_PASSWORD=password # postgresql user password
+POSTGRES_DB=database # postgresql database name
+POSTGRES_PORT=5432 # postgresql database port
+POSTGRES_HOST=db # db for Docker, localhost for local
 ```
 
 ## Project Structure
