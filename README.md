@@ -27,7 +27,7 @@ SEEDS=true docker compose up --build
 
 ## Environment variables
 
-```bash
+```ruby
 POSTGRES_USER=user # postgresql user name
 POSTGRES_PASSWORD=password # postgresql user password
 POSTGRES_DB=database # postgresql database name
