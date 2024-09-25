@@ -2,7 +2,8 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from src.pagination import Params
 from src.user.repositories import UserRepository
-from src.user.schemas import User, UserCreate, Users, UserGuides
+from src.user.schemas import User, UserCreate, Users
+from src.guide.schemas import Guides
 
 class UserService:
   def __init__(self, db: Session):
@@ -28,7 +29,7 @@ class UserService:
       raise HTTPException(status_code=400, detail="User not found")
     return user
 
-  def get_guides(self, user_id: int, params: Params) -> UserGuides:
+  def get_guides(self, user_id: int, params: Params) -> Guides:
     user = self.get_by_id(user_id)
     guides = self.user_repository.find_guides(user, params)
     return guides

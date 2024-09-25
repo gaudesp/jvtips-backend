@@ -2,7 +2,8 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from src.pagination import Params
 from src.game.repositories import GameRepository
-from src.game.schemas import Game, GameCreate, Games, GameGuides
+from src.game.schemas import Game, GameCreate, Games
+from src.guide.schemas import Guides
 
 class GameService:
   def __init__(self, db: Session):
@@ -22,7 +23,7 @@ class GameService:
       raise HTTPException(status_code=400, detail="Game not found")
     return game
 
-  def get_guides(self, game_id: int, params: Params) -> GameGuides:
+  def get_guides(self, game_id: int, params: Params) -> Guides:
     game = self.get_by_id(game_id)
     guides = self.game_repository.find_guides(game, params)
     return guides

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.pagination import paginate, Params
-from src.guide.schemas import GuidesPaginated
-from src.game.schemas import Game, GameCreate, Games, GameGuides, GamesPaginated
+from src.guide.schemas import GuidesPaginated, Guides
+from src.game.schemas import Game, GameCreate, Games, GamesPaginated
 from src.game.models import Game as GameModel
 from src.guide.models import Guide as GuideModel
 
@@ -29,7 +29,7 @@ class GameRepository:
     game = self.db.query(GameModel).filter(GameModel.name == name).first()
     return game
   
-  def find_guides(self, game: Game, params: Params) -> GameGuides:
+  def find_guides(self, game: Game, params: Params) -> Guides:
     guides = self.db.query(GuideModel).filter(GuideModel.game_id == game.id)
     paginated_guides = paginate(guides, params, GuidesPaginated)
-    return GameGuides.model_validate_nested(game, guides=paginated_guides)
+    return Guides.model_validate(paginated_guides)

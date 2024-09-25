@@ -2,8 +2,9 @@ from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from src.dependencies import get_db
 from src.pagination import Params
-from src.game.schemas import Game, GameCreate, Games, GameGuides
+from src.game.schemas import Game, GameCreate, Games
 from src.game.services import GameService
+from src.guide.schemas import Guides
 
 router = APIRouter(tags=["games"])
 
@@ -22,7 +23,7 @@ def get_game(game_id: int, db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_by_id(game_id)
 
-@router.get("/games/{game_id}/guides", response_model=GameGuides)
+@router.get("/games/{game_id}/guides", response_model=Guides)
 def get_game_guides(game_id: int, params: Params = Depends(), db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_guides(game_id, params)

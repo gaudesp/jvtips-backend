@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from src.dependencies import get_password_hash
-from src.guide.schemas import GuidesPaginated
+from src.guide.schemas import GuidesPaginated, Guides
 from src.pagination import paginate, Params
-from src.user.schemas import User, UserCreate, Users, UserGuides, UsersPaginated
+from src.user.schemas import User, UserCreate, Users, UsersPaginated
 from src.user.models import User as UserModel
 from src.guide.models import Guide as GuideModel
 
@@ -30,7 +30,7 @@ class UserRepository:
     user = self.db.query(UserModel).filter(UserModel.email == email).first()
     return user
 
-  def find_guides(self, user: User, params: Params) -> UserGuides:
+  def find_guides(self, user: User, params: Params) -> Guides:
     guides = self.db.query(GuideModel).filter(GuideModel.user_id == user.id)
     paginated_guides = paginate(guides, params, GuidesPaginated)
-    return UserGuides.model_validate_nested(user, guides=paginated_guides)
+    return Guides.model_validate(paginated_guides)
