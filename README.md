@@ -33,6 +33,7 @@ POSTGRES_PASSWORD=password # postgresql user password
 POSTGRES_DB=database # postgresql database name
 POSTGRES_PORT=5432 # postgresql database port
 POSTGRES_HOST=db # db for Docker, localhost for local
+ALLOWED_HOSTS=http://localhost:5173 # allow frontend
 ```
 
 ## Project Structure
