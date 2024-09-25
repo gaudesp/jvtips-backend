@@ -7,8 +7,8 @@ class GuideRepository:
   def __init__(self, db: Session):
     self.db = db
 
-  def create(self, guide: GuideCreate, user_id: int) -> Guide:
-    guide = GuideModel(**guide.model_dump(), user_id=user_id)
+  def create(self, guide: GuideCreate, user_id: int, game_id: int) -> Guide:
+    guide = GuideModel(**guide.model_dump(), user_id=user_id, game_id=game_id)
     self.db.add(guide)
     self.db.commit()
     self.db.refresh(guide)
