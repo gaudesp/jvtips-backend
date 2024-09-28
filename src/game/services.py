@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from src.libs.igdb.repositories import IgdbRepository
-from src.libs.igdb.schemas import IgbdGames
+from src.libs.igdb.schemas import IgdbGames
 from src.pagination import Params
 from src.game.repositories import GameRepository
 from src.game.schemas import Game, GameCreate, Games
@@ -31,7 +31,7 @@ class GameService:
     guides = self.game_repository.find_guides(game, params)
     return guides
   
-  def search_games(self, query: str) -> IgbdGames:
+  def search_games(self, query: str) -> IgdbGames:
     response = self.igdb_repository.find_games(query)
     if response.status_code == 200:
       return {"items": response.json()} 

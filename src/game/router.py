@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter, Query
 from sqlalchemy.orm import Session
 from src.dependencies import get_db
-from src.libs.igdb.schemas import IgbdGames
+from src.libs.igdb.schemas import IgdbGames
 from src.pagination import Params
 from src.game.schemas import Game, GameCreate, Games
 from src.game.services import GameService
@@ -19,7 +19,7 @@ def get_games(params: Params = Depends(), db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_all(params)
 
-@router.get("/games/search", response_model=IgbdGames)
+@router.get("/games/search", response_model=IgdbGames)
 def search_games(query: str = Query(...), db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.search_games(query)
