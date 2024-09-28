@@ -1,10 +1,15 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
+
+class IgdbCover(BaseModel):
+  id: int
+  image_id: str
 
 class IgdbGame(BaseModel):
   id: int
   category: int
   name: str
+  cover: Optional[IgdbCover] = None
 
 class IgdbGames(BaseModel):
   items: List[IgdbGame]

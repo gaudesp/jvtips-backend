@@ -11,5 +11,5 @@ class IgdbRepository:
     }
 
   def find_games(self, query: str) -> IgdbGames:
-    data = f'search "{query}"; fields name, category; where category = 0;'
+    data = f'search "{query}"; fields name, category, cover.image_id; where category = 0;'
     return requests.post(IGDB_API_URL, headers=self.headers, data=data)
