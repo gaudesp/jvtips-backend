@@ -5,6 +5,7 @@ from typing import ClassVar
 
 class GameBase(BaseModel):
   name: str
+  igdb_id: int
 
 class GameCreate(GameBase):
   pass
