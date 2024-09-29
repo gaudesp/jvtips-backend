@@ -25,6 +25,10 @@ class GameRepository:
     game = self.db.query(GameModel).filter(GameModel.id == game_id).first()
     return game
   
+  def find_one_by_igdb_id(self, igdb_id: int) -> Game:
+    game = self.db.query(GameModel).filter(GameModel.igdb_id == igdb_id).first()
+    return game
+  
   def find_one_by_name(self, name: str) -> Game:
     game = self.db.query(GameModel).filter(GameModel.name == name).first()
     return game

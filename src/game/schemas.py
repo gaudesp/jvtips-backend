@@ -11,6 +11,8 @@ class GameCreate(GameBase):
 
 class Game(GameBase):
   id: int
+  igdb_id: int
+  igdb_image: str
 
   class Config:
     from_attributes = True

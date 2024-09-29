@@ -21,7 +21,7 @@ def main():
   db = SessionLocal()
   try:
     seed_users(db, User, 10)
-    seed_games(db, Game, 25)
+    seed_games(db, Game, 1)
     seed_guides(db, Guide, 50)
     print("Seeding complete! For information, the password for all users is 'password'.")
   except Exception as e:
