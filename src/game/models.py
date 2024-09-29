@@ -8,5 +8,6 @@ class Game(Base):
   id = Column(Integer, primary_key=True, index=True)
   name = Column(String, unique=True, index=True)
   igdb_id = Column(Integer, unique=True, index=True)
+  igdb_image = Column(String, unique=True, index=True)
 
   guides = relationship("Guide", backref="game")

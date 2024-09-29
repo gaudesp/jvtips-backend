@@ -7,9 +7,14 @@ class IgdbCover(BaseModel):
 
 class IgdbGame(BaseModel):
   id: int
+  name: str
+  cover: Optional[IgdbCover] = None
+
+class IgdbSearchGame(BaseModel):
+  id: int
   category: int
   name: str
   cover: Optional[IgdbCover] = None
 
-class IgdbGames(BaseModel):
-  items: List[IgdbGame]
+class IgdbSearchGames(BaseModel):
+  items: List[IgdbSearchGame]

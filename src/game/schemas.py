@@ -5,13 +5,14 @@ from typing import ClassVar
 
 class GameBase(BaseModel):
   name: str
-  igdb_id: int
 
 class GameCreate(GameBase):
   pass
 
 class Game(GameBase):
   id: int
+  igdb_id: int
+  igdb_image: str
 
   class Config:
     from_attributes = True

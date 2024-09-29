@@ -4,7 +4,8 @@ def seed_games(db, model, count):
   print(f"Seeding {count} games :")
   for i in range(1, count+1):
     game = model(
-      name=f"Game {i}",
+      name=f"Waven",
+      igdb_image="co6y8e",
       igdb_id=109536
     )
     db.add(game)

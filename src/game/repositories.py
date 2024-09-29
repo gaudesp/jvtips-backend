@@ -21,7 +21,11 @@ class GameRepository:
     paginated_games = paginate(games, params, GamesPaginated)
     return Games.model_validate(paginated_games)
   
-  def find_one_by_id(self, igdb_id: int) -> Game:
+  def find_one_by_id(self, game_id: int) -> Game:
+    game = self.db.query(GameModel).filter(GameModel.id == game_id).first()
+    return game
+  
+  def find_one_by_igdb_id(self, igdb_id: int) -> Game:
     game = self.db.query(GameModel).filter(GameModel.igdb_id == igdb_id).first()
     return game
   
