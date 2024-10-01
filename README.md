@@ -34,6 +34,10 @@ POSTGRES_DB=database # postgresql database name
 POSTGRES_PORT=5432 # postgresql database port
 POSTGRES_HOST=db # db for Docker, localhost for local
 ALLOWED_HOSTS=http://localhost:5173 # allow frontend
+IGDB_CLIENT_ID = # igdb client id
+IGDB_CLIENT_SECRET = # igdb client id
+IGDB_API_URL = https://api.igdb.com/v4/games # igdb api url
+
 ```
 
 ## Project Structure
