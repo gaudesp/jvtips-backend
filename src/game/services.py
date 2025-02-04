@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from src.libs.igdb.repositories import IgdbRepository
-from src.libs.igdb.schemas import IgdbSearchGames, IgdbGame
+from src.libs.igdb.schemas import IgdbSearchGame, IgdbSearchGames, IgdbGame
 from src.pagination import Params
 from src.game.repositories import GameRepository
 from src.game.schemas import Game, GameCreate, Games
@@ -13,9 +13,13 @@ class GameService:
     self.igdb_repository = IgdbRepository()
 
   def create(self, game: GameCreate) -> Game:
-    if self.game_repository.find_one_by_name(game.name):
+    igdb_search: IgdbSearchGames = self.search_games(game.name)
+    if not igdb_search.get('items'):
+      raise HTTPException(status_code=400, detail="Game not found on IGDB")
+    igdb_result: IgdbSearchGame = igdb_search.get('items')[0]
+    if self.game_repository.find_one_by_igdb_id(igdb_result.get('id')):
       raise HTTPException(status_code=400, detail="Game already exists")
-    return self.game_repository.create(game)
+    return self.game_repository.create(igdb_result.get('name'), igdb_result.get('id'), igdb_result.get('cover').get('image_id'))
   
   def get_all(self, params: Params) -> Games:
     return self.game_repository.find_all(params)
