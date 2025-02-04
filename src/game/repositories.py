@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.pagination import paginate, Params
 from src.guide.schemas import GuidesPaginated, Guides
-from src.game.schemas import Game, GameCreate, Games, GamesPaginated
+from src.game.schemas import Game, Games, GamesPaginated
 from src.game.models import Game as GameModel
 from src.guide.models import Guide as GuideModel
 
@@ -9,8 +9,8 @@ class GameRepository:
   def __init__(self, db: Session):
     self.db = db
 
-  def create(self, game: GameCreate) -> Game:
-    game = GameModel(name=game.name)
+  def create(self, name: str, igdb_id: int, igdb_image: str) -> Game:
+    game = GameModel(name=name, igdb_id=igdb_id, igdb_image=igdb_image)
     self.db.add(game)
     self.db.commit()
     self.db.refresh(game)

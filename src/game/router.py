@@ -34,7 +34,7 @@ def get_game(igdb_id: int, db: Session = Depends(get_db)):
   game_service = GameService(db)
   return game_service.get_by_igdb_id(igdb_id)
 
-@router.get("/games/{game_id}/guides", response_model=Guides)
-def get_game_guides(game_id: int, params: Params = Depends(), db: Session = Depends(get_db)):
+@router.get("/games/{igdb_id}/guides", response_model=Guides)
+def get_game_guides(igdb_id: int, params: Params = Depends(), db: Session = Depends(get_db)):
   game_service = GameService(db)
-  return game_service.get_guides(game_id, params)
+  return game_service.get_guides(igdb_id, params)

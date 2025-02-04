@@ -15,8 +15,8 @@ class GuideService:
 
   def create(self, guide: GuideCreate) -> Guide:
     user = self.auth_service.get_current_user(self.user_token)
-    game = self.game_service.get_by_id(guide.game_id)
-    return self.guide_repository.create(guide, user_id=user.id, game_id=game.id)
+    self.game_service.get_by_id(guide.game_id)
+    return self.guide_repository.create(guide, user_id=user.id)
   
   def get_all(self, params: Params) -> Guides:
     return self.guide_repository.find_all(params)
