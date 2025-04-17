@@ -1,64 +1,53 @@
-# JVTips Backend
+# JVTips Backend 🎮💡
 
-REST API project using fastApi.
+JVTips Backend est une API RESTful développée avec **FastAPI** et **Python**, conçue pour interagir avec l'interface de [JVTips Frontend](https://github.com/gaudesp/jvtips-frontend), permettant de partager des astuces sur des jeux vidéo.
 
-## Requirements
-- [Docker](https://docs.docker.com/engine/install/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+## ⚙️ Prérequis
+- **Docker** (*version* : `>=20.10.0`)
+- **Docker Compose** (*version* : `>=1.29.0`)
+- **Python** (*version* : `3.12.0`)
+- Un **terminal** compatible **Bash** (*sur WSL ou Unix-like*)
+- Le fichier **`.env`** de configuration (*à récupérer sur le Drive*)
 
-## Running the Application
-
-Default running :
+> 💡 **Optionnel**, utilisez un environnement virtuel pour lancer des scripts Python et avoir accès aux dépendances du projet :
 ```bash
-docker compose up --build
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-Running with seeds :
-```bash
-SEEDS=true docker compose up --build
-```
+## 🚀 Setup
+1. **Clonez le repo** :  
+   ```bash
+   git clone git@github.com:gaudesp/jvtips-backend.git
+   cd jvtips-backend
+   ```
 
-## Accessing the Application Locally
+2. **Lancez l'application avec Docker Compose** :
+   - Pour lancer l'application sans données préremplies :
+     ```bash
+     docker compose up --build
+     ```
+   - Pour lancer l'application avec des données initiales (seeds) :
+     ```bash
+     SEEDS=true docker compose up --build
+     ```
 
-- The application will be available at: [http://localhost:3000](http://localhost:3000)
-- Swagger Documentation: [http://localhost:3000/docs](http://localhost:3000/docs)
-- Redoc Documentation: [http://localhost:3000/redoc](http://localhost:3000/redoc)
-- Database Adminer: [http://localhost:9000](http://localhost:9000)
+3. **Accédez à l'application localement** :
+   - API accessible via : [http://localhost:3000](http://localhost:3000)
+   - Documentation Swagger : [http://localhost:3000/docs](http://localhost:3000/docs)
+   - Documentation Redoc : [http://localhost:3000/redoc](http://localhost:3000/redoc)
+   - Adminer (gestion de la base de données) : [http://localhost:9000](http://localhost:9000)
 
-## Environment variables
+## 📦 Dépendances
+- **`fastapi`** : Framework principal utilisé pour la création de l'API REST.
+- **`uvicorn`** : Serveur ASGI pour exécuter l'application FastAPI.
+- **`pydantic`** : Utilisé pour la validation des données et des modèles.
+- **`SQLAlchemy`** : ORM pour interagir avec la base de données.
+- **`psycopg2-binary`** : Adaptateur PostgreSQL pour Python.
+- **`bcrypt`** et **`pyjwt`** : Gestion de la sécurité pour l'authentification des utilisateurs.
+- **`requests`** : Librairie pour interagir avec des API externes.
+- **`python-multipart`** : Pour gérer les fichiers envoyés par l'utilisateur via l'API.
 
-```python
-POSTGRES_USER=user # postgresql user name
-POSTGRES_PASSWORD=password # postgresql user password
-POSTGRES_DB=database # postgresql database name
-POSTGRES_PORT=5432 # postgresql database port
-POSTGRES_HOST=db # db for Docker, localhost for local
-ALLOWED_HOSTS=http://localhost:5173 # allow frontend
-IGDB_CLIENT_ID = # igdb client id
-IGDB_CLIENT_SECRET = # igdb client id
-IGDB_API_URL = https://api.igdb.com/v4/games # igdb api url
-
-```
-
-## Project Structure
-
-This structure is inspired by [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-best-practices)
-
-```ruby
-jvtips-backend
-├── src
-│   ├── module
-│   │   ├── config.py  # local configs
-│   │   ├── dependencies.py # module dependencies
-│   │   ├── models.py  # db models
-│   │   ├── router.py  # module endpoints
-│   │   ├── schemas.py  # pydantic models
-│   │   ├── services.py # service layer for business logic
-│   │   └── repositories.py # repository pattern for db transaction
-│   ├── config.py  # global configs
-│   ├── database.py  # db connection related stuff
-│   ├── dependencies.py  # global dependencies
-│   ├── main.py  # main app
-│   └── router.py #  global router
-└── .env # env variables
-```
+## Contribution 🤝
+Lead developer : [@gaudesp](https://github.com/gaudesp)

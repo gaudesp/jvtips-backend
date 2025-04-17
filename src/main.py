@@ -8,7 +8,6 @@ from src.dependencies import http_error_handler
 
 def get_application() -> FastAPI:
   application = FastAPI()
-  Base.metadata.create_all(bind=engine)
   application.include_router(router_api, prefix=API_PREFIX)
   application.add_exception_handler(HTTPException, http_error_handler)
   application.add_middleware(
