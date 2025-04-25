@@ -1,5 +1,5 @@
 # JVTips Backend 🎮💡
-JVTips Backend est une API RESTful développée avec **FastAPI** et **Python**, conçue pour interagir avec l'interface de [JVTips Frontend](https://github.com/gaudesp/jvtips-frontend), permettant de partager des astuces sur des jeux vidéo.
+**JVTips Backend** est une API RESTful développée en **Python** avec **FastAPI**, conçue pour interagir avec l'interface de [JVTips Frontend](https://github.com/gaudesp/jvtips-frontend), permettant de partager et consulter des astuces sur des jeux vidéo.
 
 ## ⚙️ Prérequis
 - **Docker** (*version* : `28.0.1`)
@@ -48,5 +48,5 @@ SEEDS=true docker compose up --build
 - `requests` : Librairie pour interagir avec des API externes.
 - `python-multipart` : Pour gérer les fichiers envoyés par l'utilisateur via l'API.
 
-## Contribution 🤝
+## 🤝 Contribution
 Lead developer : [@gaudesp](https://github.com/gaudesp)
